@@ -1,0 +1,13 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index bbc1db9..3874782 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -5034,7 +5034,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "radicle-cli"
+-version = "0.5.0"
++version = "0.5.1"
+ dependencies = [
+  "anyhow",
+  "assay",
