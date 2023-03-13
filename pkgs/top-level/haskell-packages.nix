@@ -360,7 +360,7 @@ in {
       llvmPackages = pkgs.llvmPackages_15;
     };
     ghc98 = compiler.ghc982;
-    ghcHEAD = callPackage ../development/compilers/ghc/head.nix {
+    ghcHEAD = callPackage ../development/compilers/ghc/head.nix ({
       bootPkgs =
         # For GHC 9.6 no armv7l bindists are available.
         if stdenv.hostPlatform.isAarch32 then
@@ -384,7 +384,11 @@ in {
       # 2023-01-15: Support range >= 11 && < 16
       buildTargetLlvmPackages = pkgsBuildTarget.llvmPackages_15;
       llvmPackages = pkgs.llvmPackages_15;
-    };
+    } // pkgs.lib.optionalAttrs stdenv.targetPlatform.isWasm {
+      # Use GHC/tweag's custom libffi for wasm
+      libffi = pkgs.targetPackages.libffi-wasm-ghc;
+      libffiAttr = "libffi-wasm-ghc";
+    });
 
     ghcjs = compiler.ghcjs810;
     ghcjs810 = callPackage ../development/compilers/ghcjs/8.10 {
