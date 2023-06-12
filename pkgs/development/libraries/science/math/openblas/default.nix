@@ -93,6 +93,13 @@ let
       USE_OPENMP = !stdenv.hostPlatform.isMusl;
     };
 
+    x86_64-windows = {
+      BINARY = 64;
+      TARGET = setTarget "ATHLON";
+      DYNAMIC_ARCH = setDynamicArch true;
+      NO_AVX512 = !enableAVX512;
+    };
+
     powerpc64le-linux = {
       BINARY = 64;
       TARGET = setTarget "POWER5";
@@ -251,6 +258,8 @@ EOF
     ln -s $out/lib/libopenblas${shlibExt} $out/lib/libcblas${shlibExt}.3
     ln -s $out/lib/libopenblas${shlibExt} $out/lib/liblapack${shlibExt}.3
     ln -s $out/lib/libopenblas${shlibExt} $out/lib/liblapacke${shlibExt}.3
+  '' + lib.optionalString (stdenv.hostPlatform.isWindows && enableShared) ''
+    ln -s $out/bin/libopenblas${shlibExt} $out/lib/libopenblas${shlibExt}
   '' + lib.optionalString enableStatic ''
     ln -s $out/lib/libopenblas.a $out/lib/libblas.a
     ln -s $out/lib/libopenblas.a $out/lib/libcblas.a
