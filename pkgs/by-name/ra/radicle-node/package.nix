@@ -26,7 +26,7 @@
     darwin.apple_sdk.frameworks.Security
   ];
 
-  doCheck = stdenv.hostPlatform.isLinux;
+  doCheck = true;
 
   preCheck = ''
     export PATH=$PATH:$PWD/target/${stdenv.hostPlatform.rust.rustcTargetSpec}/release
